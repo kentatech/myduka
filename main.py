@@ -1,9 +1,13 @@
 from flask import Flask,render_template
 from database import conn, cur
+from datetime import datetime
 
 app = Flask(__name__)
 
-
+# Define a custom filter
+@app.template_filter('strftime')
+def format_datetime(value, format="%B %d, %Y"):
+    return value.strftime(format)
 
 @app.route("/")
 def index():
@@ -21,7 +25,7 @@ def prods():
 
 @app.route("/sales")
 def salez():
-    cur.execute("select * from sales")
-    return render_template("sales.html",sales=cur.fetchall())
+    cur.execute("select sales.ID, products.Name, sales.quantity, sales.created_at from sales inner join products on sales.pid = products.id")
+    return render_template("sales.html",sales=cur.fetchall(),products=cur.fetchall())
 
-app.run()
+app.run(debug=True)

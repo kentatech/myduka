@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <table border="3">
-        <thead>
+    <link
+      rel="stylesheet"
+      href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"
+    />
+  </head>
+  <body>
+    <table border="3" id="myTable">  
+      <thead>
         <tr>
-
-        <th>Id</th>
-        <th>Product ID</th>
-        <th>Quantity</th>
-        <th>Time purchased</th>
-        
+          <th>Sale Id</th>
+          <th>Product Name</th>
+          <th>Sale Quantity</th>
+          <th>Sale Date</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         {% for s in sales %}
+
         <tr>
-        <td>{{s[0]}}</td>
-        <td>{{s[1]}}</td>
-        <td>{{s[2]}}</td>
-        <td>{{s[3]}}</td>
-        
+          <td>{{s[0]}}</td>
+          <td>{{s[1]}}</td>
+          <td>{{s[2]}}</td>
+          <td>{{ s[3] | strftime("%B %d, %Y") }}</td>
         </tr>
+
         {% endfor %}
-        </tbody>
-        </table>
-          
-</body>
+      </tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+    <script>
+      let table = new DataTable("#myTable");
+    </script>
+
+  </body>
 </html>
+
