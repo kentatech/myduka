@@ -19,6 +19,9 @@ def prods():
     cur.execute("select * from products")
     return render_template("products.html",products=cur.fetchall())
 
-
+@app.route("/sales")
+def salez():
+    cur.execute("select * from sales")
+    return render_template("sales.html",sales=cur.fetchall())
 
 app.run()
