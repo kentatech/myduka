@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <p>hey home page</p>
+    {% for p in products %}
+    {{p [0:]}} <br>
+    
+    {% endfor %}
 </body>
 </html>

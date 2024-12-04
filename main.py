@@ -7,18 +7,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    name="Dev-Joe"
+    return render_template("index.html",myname=name)
 
 @app.route("/about")
 def about():
     return "About page info is supposed to be displayed on this route"
 
 @app.route("/products")
-def productspage():
-    cur.execute ("select * from products")
-    products=cur.fetchall()
-    for x in products:
-        print(x)
-    
+def prods():
+    cur.execute("select * from products")
+    return render_template("products.html",products=cur.fetchall())
+
+
 
 app.run()
