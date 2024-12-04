@@ -10,7 +10,7 @@
     />
   </head>
   <body>
-    <table border="3" id="myTable">  
+    <table border="3" id="myTable">  <!--id is now linked to table to give it a style referenced from datatables-->
       <thead>
         <tr>
           <th>Sale Id</th>
@@ -32,11 +32,13 @@
         {% endfor %}
       </tbody>
     </table>
-
+<!-- the jquery should be before the datatables and should be loaded before the datatables -->
+ <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-
+<!--script provided to link table style from datatables site -->
+<!--the script will run once linked to the opening of the table tag using id represented as hashtag-->
     <script>
       let table = new DataTable("#myTable");
     </script>
