@@ -8,9 +8,11 @@
       rel="stylesheet"
       href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"
     />
+    <!--linking stylesheet-->
   </head>
   <body>
-    <table border="3" id="myTable">  <!--id is now linked to table to give it a style referenced from datatables-->
+    <table border="3" id="myTable">
+      <!--id is now linked to table to give it a style referenced from datatables-->
       <thead>
         <tr>
           <th>Sale Id</th>
@@ -26,23 +28,27 @@
           <td>{{s[0]}}</td>
           <td>{{s[1]}}</td>
           <td>{{s[2]}}</td>
-          <td>{{ s[3] | strftime("%B %d, %Y") }}</td>
+          <td>
+            {%if s[3] != None %}
+            <!--line 31,33,34,35 are if statements used when value is null-->
+            {{ s[3] | strftime("%B %d, %Y") }}<!--only line needed the above and below are problem solving technique when value is null-->
+            {% else %} Time Unavailable {% endif %}
+          </td>
+          <!--this inputs readable date format/ first import datetime and insert custom filter before this last step-->
         </tr>
 
         {% endfor %}
       </tbody>
     </table>
-<!-- the jquery should be before the datatables and should be loaded before the datatables -->
- <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->
+    <!-- the jquery should be before the datatables and should be loaded before the datatables -->
+    <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-<!--script provided to link table style from datatables site -->
-<!--the script will run once linked to the opening of the table tag using id represented as hashtag-->
+    <!--script provided to link table style from datatables site -->
+    <!--the script will run once linked to the opening of the table tag using id represented as hashtag-->
     <script>
       let table = new DataTable("#myTable");
     </script>
-
   </body>
 </html>
-
