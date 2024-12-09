@@ -13,7 +13,7 @@
   <body>
       <form action="/sales" method="post">
 
-        <label for="">Product Id</label>
+        <label for="">Product Name</label>
         <select name="pid">
           {% for p in products %}
  <!-- loop iterates through the products inturn looping through index we want to display -->
@@ -24,14 +24,9 @@
         <label for="">Amount</label>
         <input type="number" name="amount">
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Make Sale">
 
       </form>
-
-
-
-
-
 
     <table border="3" id="myTable">
       <!--id is now linked to table to give it a style referenced from datatables-->
