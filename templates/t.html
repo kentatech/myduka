@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <ul>
+        <li><a href="/">hike</a></li>
+      </ul>
+    </div>
+
+    <style>
+      .container {
+        background-color: aqua;
+        border-radius: 110px;
+        text-decoration: none;
+        list-style: none;
+        justify-content: space-between;
+      }
+      a {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        display: flex;
+      }
+      ul li {
+        font-size: 370px;
+      }
+      .display{
+        display: flex;
+      }
+      tr th{
+        background-color: #f0f0f0;
+      }
+    </style>
+
+    <!-- dl tag is used for description list -->
+
+    <table id="myTable" class="display">
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>phone</th>
+        <th>address</th>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td>kenta</td>
+        <td>dt@mail.com</td>
+        <td>0701465123</td>
+        <td>kasa</td>
+      </tr>
+      
+    </table>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
+    <script>
+      let table = new DataTable("#myTable");
+    </script>
+
+  </body>
+</html>
