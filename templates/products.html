@@ -102,11 +102,14 @@
     </table>
     <!-- the jquery should be before the datatables and should be loaded before the datatables -->
     <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <!--script provided to link table style from datatables site -->
     <!--the script will run once linked to the opening of the table tag using id represented as hashtag-->
+    
+    
+    
     <script>
       let table = new DataTable('#myTable');
     </script>
@@ -116,9 +119,11 @@
                 "order": [[0, "desc"]] // Order by the first column (index 0) in descending order
             });
         });
-    </script> -->
+    </script>-->
+
+
     <!--bootstrap-->
-    <!-<script
+    <!--<script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
       crossorigin="anonymous"

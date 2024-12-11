@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .hero{
+           background-color:rgb(55,81,126);
+           height: 700px;
+           margin:10px;
+           padding:10px;
+           position: relative; 
+
+        }
+        .navbar{
+            display: flex;
+            justify-content: space-between;
+            font-size: 30px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+      
+        }
+        .first{
+            display: flex; 
+           
+        }
+        .first li{
+            padding-right: 20px;
+            list-style: none;
+        }
+        .first li a{
+            text-decoration: none;
+            color: azure;
+        }
+        .sidenav{
+            padding-right: 30px;
+            
+            
+        }
+        .sidenav a{
+            text-decoration: none;
+            color: #FFD43B;    
+            
+        }
+        .sidenav li{
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .content img{
+            position: absolute;
+            right: 190px;
+            width: 600px;
+            top: 250px;
+            border-radius: 9px;
+        }
+        .content .text{
+            width:60%;
+            color: aliceblue;
+            padding: 2px;
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            font-size: 30px;
+            
+        }
+        .text button{
+            padding: 0px 0px;
+            left: 0%;
+            font-size: 40px;
+            border-color: black;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            border-radius: 5px;
+            
+        }
+        .content .text button a{
+            text-decoration: none;
+            color: black;
+            background-color: aliceblue;
+            border-radius: 5px;
+            padding: 0px;
+            border: 1px;
+            border-color: rgb(0, 253, 76);
+            
+        }
+        .content .text  button a:hover{
+            color: #ffffff;
+            background-color: rgb(24, 224, 77);
+            border-color: rgb(3, 253, 3);
+            font-size:50px;
+            animation-delay: 10ms;
+            animation-duration: 1005ms;  
+        }
+        
+        .content .image button{
+            padding: 0px;
+            display: flex;
+            position: absolute;
+            top: 560px;
+            left: 500px;
+            border-radius: 0px; 
+            
+        }
+        .image button a{
+            text-decoration: none;
+            color: white;
+            font-size: 30px;
+            background-color: #36557d;
+        }
+        .image button a:hover{
+            color: #ffffff;
+            background-color: red;
+            border-color: #ea0d0d;
+            /* font-size: 50px; */
+            animation-delay: 1000ms;
+            animation-duration: 1005ms;
+            
+        }
+        
+        
+
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="navbar">
+            <ul class="first">
+                <li><a href=""><i class="fa-solid fa-bars fa-rotate-180 fa-xl" style="color: #FFD43B;"></i></a></li>
+                <li><a href="/navbar">Home</a></li>
+                <li><a href="/home">Service</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <ul class="sidenav">
+                <li><a href=""> Contact us </a></li>
+            </ul>
+        </div>
+    
+        <div class="content">
+
+            <div class="text">
+                <h1>Join!<br>Our Dev Community</br>Become a Full-Stack Dev</h1>
+                <p>Get International Support & Experience.</p>
+                <button><a href="/home">Get Started</a></button>
+            </div>
+            <div class="image">
+                <button><a href="https:www.youtube.com"><i class="fa-solid fa-play" style="color: #ffffff;"></i> Watch Testimonials</a></button>
+
+            </div>
+            
+
+             <div class="img">
+                 <img src="/static/images/a-removebg-preview.png" alt="" width="400px" height="400px">
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>
+

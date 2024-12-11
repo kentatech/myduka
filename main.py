@@ -4,20 +4,87 @@ from database import conn, cur
 # flask name initiates app- class obj
 app = Flask(__name__)
 
-# Define a custom filter- this will be used to format the date(should be done after importing datetime)
+# Define a custom filter- this will be used to format the date
 @app.template_filter('strftime')
 def format_datetime(value, format="%B %d, %Y"):
     return value.strftime(format)
 
 
-@app.route("/")
+@app.route("/home")
 def index():
-    name="Dev-Joe"
-    return render_template("index.html",myname=name)
+    name="Friend"
+    return render_template("index.html",name=name)
+
+@app.route("/navbar")
+def navb():
+   
+    return render_template("navbar.html")
 
 @app.route("/about")
 def about():
     return "About page info is supposed to be displayed on this route"
+
+@app.route("/dashboard")
+def dashboardfunc():
+    cur.execute("SELECT sum (p.selling_price * s.quantity) as sales, s.created_at from sales as s join products as p on p.id=s.pid GROUP BY created_at ORDER BY created_at;")
+    daily_sales=cur.fetchall()
+   # print(daily_sales)
+    x=[]
+    y=[]
+    for i in daily_sales:
+        x.append(i[1].strftime("%B %d, %Y"))
+        y.append(float(i[0]))
+        
+    # list comprehension
+    #lx = [i[1].strftime("%B %d, %Y") for i in daily_sales]
+    #ly = [i[0] for i in daily_sales]
+
+    #append happens because it is inside a list
+    #you can also add an if statement
+    #lx = [i[1].strftime("%B %d, %Y") for i in daily_sales if float(i[0])>60000]
+
+    cur.execute("SELECT sum (p.selling_price * s.quantity) as Profit, p.name from products as p join sales as s on p.id=s.pid GROUP BY p.name ORDER BY profit desc;")
+    profit_per_product=cur.fetchall()
+    p=[]
+    q=[]
+
+    for z in profit_per_product:
+        p.append(z[1])
+        q.append(z[0])
+
+    return render_template("dashboard.html",x=x,y=y,p=p,q=q,)
+
+
+@app.route("/login", methods=["POST","GET"])
+def logi():
+    if request.method=="POST":
+        email=request.form["mail"]
+        password=request.form["passw"]
+        cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
+        row= cur.fetchone()
+        if row== None:
+            return "Invalid Credentials"
+        else:
+            return redirect("/dashboard")
+    else:
+        return render_template("login.html")
+    
+
+@app.route("/register", methods=["GET","POST"])
+def reg():
+    if request.method=="GET":
+         return render_template("register.html")
+    else:
+        name=request.form["jina"]
+        email=request.form["mail"]
+        password=request.form["passw"]
+        query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,password)
+        cur.execute(query_reg)
+        conn.commit()
+        return redirect("/dashboard")
+
+
+
 
 @app.route("/products", methods=["GET", "POST"])
 #get is fetching from database and post is getting from form which is filled and posted
@@ -33,7 +100,7 @@ def products():
         buying_price = float(request.form["bp"])
         selling_price = float(request.form["sp"])
         stock_quantity = int(request.form["stqu"])
-        print(name, buying_price, selling_price, stock_quantity) 
+        #print(name, buying_price, selling_price, stock_quantity) 
         if selling_price < buying_price:
             return "Selling price should be greater than buying price"
         
@@ -52,7 +119,7 @@ def salez():
     if request.method=="POST":
         pid=request.form["pid"]
         amount=request.form["amount"]
-        print(pid,amount)
+        #print(pid,amount)
         query_s="insert into sales(pid,quantity,created_at) "\
         "values('{}',{},{})".format(pid,amount,'now()')
         cur.execute(query_s)
@@ -65,5 +132,6 @@ def salez():
                     "from sales inner join products on sales.pid = products.id")
         sales=cur.fetchall()
         return render_template("sales.html",products=products,sales=sales)
+    
 
 app.run(debug=True)
