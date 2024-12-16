@@ -1,8 +1,28 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect,session
 from database import conn, cur
+from functools import wraps
+
+#functools import wraps is initialised to use the decorator function
 
 # flask name initiates app- class obj
 app = Flask(__name__)
+
+#secret placed for runing sessions
+app.secret_key="myduka123"
+
+#Decorator function is used to give a func/route more functionality
+#It runs before the route function is processed
+
+def login_required(f):
+    @wraps(f)
+    def protected(*args, **kwargs):
+        if 'email' in session:
+            return f(*args, **kwargs)
+        return redirect("/login")
+    return protected
+
+
+
 
 # Define a custom filter- this will be used to format the date
 @app.template_filter('strftime')
@@ -10,22 +30,32 @@ def format_datetime(value, format="%B %d, %Y"):
     return value.strftime(format)
 
 
-@app.route("/home")
+
+
+
+@app.route("/")
 def index():
     name="Friend"
     return render_template("index.html",name=name)
 
 @app.route("/navbar")
 def navb():
-   
     return render_template("navbar.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
 
 @app.route("/about")
 def about():
     return "About page info is supposed to be displayed on this route"
 
 @app.route("/dashboard")
+@login_required
 def dashboardfunc():
+
     cur.execute("SELECT sum (p.selling_price * s.quantity) as sales, s.created_at from sales as s join products as p on p.id=s.pid GROUP BY created_at ORDER BY created_at;")
     daily_sales=cur.fetchall()
    # print(daily_sales)
@@ -65,6 +95,7 @@ def logi():
         if row== None:
             return "Invalid Credentials"
         else:
+            session["email"]= email
             return redirect("/dashboard")
     else:
         return render_template("login.html")
@@ -89,7 +120,9 @@ def reg():
 @app.route("/products", methods=["GET", "POST"])
 #get is fetching from database and post is getting from form which is filled and posted
 #model view controller uses this to get data from database and send it to view-which works across all frameworks
+@login_required
 def products():
+
     if request.method == "GET":
         cur.execute("SELECT * FROM products order by id desc")
         products = cur.fetchall()
@@ -115,6 +148,7 @@ def products():
     
 
 @app.route("/sales",methods=["GET", "POST"])
+@login_required
 def salez():
     if request.method=="POST":
         pid=request.form["pid"]
