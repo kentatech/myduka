@@ -19,19 +19,151 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-    <style>
-        
-    </style>
+    <style></style>
   </head>
   <body>
-    <ul>
-      <a href="/">Home</a>
-      <a href="/dashboard">Dashboard</a>
-      <a href="/products">Products</a>
-      <a href="/sales">Sales</a>
-      <a href="/logout">logout</a>
-    </ul>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">MyDuKa App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/"
+                ><i
+                  class="fa-solid fa-house fa-beat"
+                  style="color: #74c0fc"
+                ></i>
+                Home
+              </a>
+            </li>
+          </ul>
+          <span class="navbar-text">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/login"
+                  ><i
+                    class="fa-regular fa-user fa-shake"
+                    style="color: #ff1420"
+                  ></i>
+                  Login
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/register"
+                  ><i
+                    class="fa-solid fa-right-to-bracket fa-shake fa-xl"
+                    style="color: #ffd43b"
+                  ></i>
+                  Register
+                </a>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div
+        id="carouselExampleSlidesOnly"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="/static/images/4048.jpg"
+              class="d-block"
+              style="width: 100%; height: auto"
+              alt="Homepage Pic"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="/static/images/pic002.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="/static/images/side-view-cropped-unrecognizable-business-people-working-common-desk.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-4">
+          <div class="card" style="width: 18rem">
+            <img
+              src="/static/images/pic001.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">Manage Products</h5>
+              <p class="card-text">
+                Get to know your inventory and manage your products with ease.
+              </p>
+              <a href="/products" class="btn btn-primary">Products</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" style="width: 18rem">
+            <img
+              src="/static/images/pic002.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">Manage Sales</h5>
+              <p class="card-text">
+                Manage your sales and track your revenue with our easy-to-use
+              </p>
+              <a href="/sales" class="btn btn-primary">Sales</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" style="width: 18rem">
+            <img
+              src="/static/images/pic003.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">Dashboard Analytics</h5>
+              <p class="card-text">
+                Access to real-time analytics and insights to help you make data
+              </p>
+              <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

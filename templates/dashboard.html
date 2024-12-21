@@ -13,68 +13,112 @@
     <style></style>
   </head>
   <body class="dashbody">
-    <div class="chart01">
-      <div>
-        <canvas id="myChart"></canvas>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">KentaTech</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/products">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/sales">Sales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="chart01">
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
 
-      <script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
 
 
-        const ctx = document.getElementById('myChart');
+              const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: {{ x | tojson | safe }},
-            datasets: [{
-              label: 'profit per day',
-              data: {{ y | tojson | safe }},
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      </script>
-    </div>
-    <!-- chart 002-->
-    <div class="chart02">
-      <div>
-        <canvas id="myChart002"></canvas>
+              new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: {{ x | tojson | safe }},
+                  datasets: [{
+                    label: 'profit per day',
+                    data: {{ y | tojson | safe }},
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+        </div>
+        <!-- chart 002-->
+        <div class="col-6">
+          <div class="chart02">
+            <div>
+              <canvas id="myChart002"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+              const barctx = document.getElementById('myChart002');
+
+              new Chart(barctx, {
+                type: 'bar',
+                data: {
+                  labels: {{ p | tojson | safe }},
+                  datasets: [{
+                    label: 'profit per product',
+                    data: {{ q | tojson | safe }},
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+        </div>
       </div>
-
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-      <script>
-        const barctx = document.getElementById('myChart002');
-
-        new Chart(barctx, {
-          type: 'bar',
-          data: {
-            labels: {{ p | tojson | safe }},
-            datasets: [{
-              label: 'profit per product',
-              data: {{ q | tojson | safe }},
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      </script>
     </div>
 
     <script
