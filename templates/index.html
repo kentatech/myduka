@@ -30,9 +30,19 @@
     <style></style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-expand-md bg-warning">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">MyDuKa App</a>
+        <a
+          class="navbar-brand"
+          href="/"
+          style="
+            font-weight: bolder;
+            color: red;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman',
+              serif;
+          "
+          >MyDuKa App</a
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -47,19 +57,27 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/"
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/"
+                style="color: aliceblue; font-weight: bolder"
                 ><i
-                  class="fa-solid fa-house fa-beat"
-                  style="color: #74c0fc"
+                  class="fa-solid fa-house fa-beat-fade"
+                  style="color: #0e79dd"
                 ></i>
                 Home
               </a>
             </li>
           </ul>
-          <span class="navbar-text">
+          <span class="navbar-text" style="margin-right: 30px">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/login"
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="/login"
+                  style="color: aliceblue; font-weight: bolder"
                   ><i
                     class="fa-regular fa-user fa-shake"
                     style="color: #ff1420"
@@ -67,54 +85,99 @@
                   Login
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/register"
-                  ><i
-                    class="fa-solid fa-right-to-bracket fa-shake fa-xl"
-                    style="color: #ffd43b"
-                  ></i>
-                  Register
-                </a>
-              </li>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                style="font-weight: bolder"
+              >
+                Register
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Registration Form
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/register" method="post">
+                        <label for="" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="jina" />
+
+                        <label for="" class="form-label">email</label>
+                        <input type="email" class="form-control" name="mail" />
+
+                        <label for="" class="form-label">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          name="passw"
+                        />
+                      </form>
+
+                      <a href="/login" class="form-text"
+                        >Do you have an Account already?Click to Login</a
+                      >
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        Complete Registration
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </ul>
           </span>
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="card text-bg-primary">
+      <img
+        src="/static/images/masterhomepage001.png"
+        class="card-img"
+        alt="pic 002"
+      />
       <div
-        id="carouselExampleSlidesOnly"
-        class="carousel slide"
-        data-bs-ride="carousel"
+        class="card-img-overlay"
       >
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="/static/images/4048.jpg"
-              class="d-block"
-              style="width: 100%; height: auto"
-              alt="Homepage Pic"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="/static/images/pic002.jpg"
-              class="d-block w-100"
-              alt="..."
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="/static/images/side-view-cropped-unrecognizable-business-people-working-common-desk.jpg"
-              class="d-block w-100"
-              alt="..."
-            />
-          </div>
-        </div>
+        <h1 class="card-title text-bg-primary" style="padding:10px; font-weight: bolder; border-radius:10px; width:55%;">
+          <i class="fa-solid fa-earth-americas fa-lg" style="color: #ffffff;"></i> World's No.1 Point of Sale App 
+        </h1>
+        <h2 class="card-text text-bg-success" style="padding:15px; margin-top: 5px; color: aliceblue;  border-radius: 5px; font-weight: bolder; width: 55%;">
+          Manage Goods with ease! <br>Suitable for all kinds of Businesses <i class="fa-solid fa-check fa-beat fa-xl" style="color: #ffffff;"></i></br>
+        </h2>
+        
       </div>
-
+    </div>
+    <div class="container">
       <div class="row mt-3">
-        <div class="col-4">
+        <div class="col-sm-1 col-md-6 col-lg-4 mb-3">
           <div class="card" style="width: 18rem">
             <img
               src="/static/images/pic001.jpg"
@@ -130,7 +193,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-sm-1 col-md-6 col-lg-4 mb-3">
           <div class="card" style="width: 18rem">
             <img
               src="/static/images/pic002.jpg"
@@ -146,7 +209,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-sm-1 col-md-6 col-lg-4 mb-3">
           <div class="card" style="width: 18rem">
             <img
               src="/static/images/pic003.jpg"
@@ -164,6 +227,12 @@
         </div>
       </div>
     </div>
+
+    <footer>
+      <p class="card-text" style="font-weight: bold; font-style: italic ; width: 100%; text-align: center; background-color: beige;">
+        Developed by KentaTech (CopyRight 2024)
+      </p>
+    </footer>
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

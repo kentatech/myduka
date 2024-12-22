@@ -15,6 +15,13 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -46,7 +53,10 @@
               <a class="nav-link" href="/sales">Sales</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
+              <a class="nav-link" href="/logout"><i
+                class="fa-solid fa-right-to-bracket fa-shake fa-xl"
+                style="color: #ffd43b"
+              ></i> Logout</a>
             </li>
           </ul>
         </div>
@@ -139,6 +149,11 @@
         {% endfor %}
       </tbody>
     </table>
+    <footer>
+      <p class="card-text" style="font-weight: bold; font-style: italic ; width: 100%; text-align: center; background-color: beige;">
+        Developed by KentaTech (CopyRight 2024)
+      </p>
+    </footer>
     <!-- the jquery should be before the datatables and should be loaded before the datatables -->
     <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
