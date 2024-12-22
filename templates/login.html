@@ -122,22 +122,72 @@
         <button type="submit" class="btn btn-primary">Log In</button>
       </form>
 
-      <a href="/register">Dont have an account?Click Register Now!</a>
+      <!-- Button trigger modal -->
+      <button
+      type="button"
+      class="btn btn-success mt-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      
+    >
+      Don't have an account? Register Now !
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Registration Form
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="registrationForm" action="/register" method="post">
+              <label for="" class="form-label">Username</label>
+              <input type="text" class="form-control" name="jina" />
+
+              <label for="" class="form-label">email</label>
+              <input type="email" class="form-control" name="mail" />
+
+              <label for="" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="passw"
+              />
+            </form>
+
+            <a href="/login" class="form-text"
+              >Do you have an Account already?Click to Login</a
+            >
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary" form="registrationForm">
+              Complete Registration
+            </button>
+          </div>
     </div>
-    <footer>
-      <p
-        class="card-text"
-        style="
-          font-weight: bold;
-          font-style: italic;
-          width: 100%;
-          text-align: center;
-          background-color: beige;
-        "
-      >
-        Developed by KentaTech (CopyRight 2024)
-      </p>
-    </footer>
+    
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
