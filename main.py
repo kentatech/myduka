@@ -8,17 +8,17 @@ from functools import wraps
 app = Flask(__name__)
 
 #secret placed for runing sessions
-app.secret_key="myduka123"
+app.secret_key="!mydUIOka9923!"
 
 #Decorator function is used to give a func/route more functionality
-#It runs before the route function is processed
+#It runs before the route function is processed to see if user is logged in
 
 def login_required(f):
     @wraps(f)
     def protected(*args, **kwargs):
         if 'email' in session:
             return f(*args, **kwargs)
-        return redirect("/login")
+        return redirect(f"/login?next={request.path}")
     return protected
 
 
@@ -28,9 +28,6 @@ def login_required(f):
 @app.template_filter('strftime')
 def format_datetime(value, format="%B %d, %Y"):
     return value.strftime(format)
-
-
-
 
 
 @app.route("/")
@@ -86,19 +83,23 @@ def dashboardfunc():
 
 
 @app.route("/login", methods=["POST","GET"])
-def logi():
+def login():
     if request.method=="POST":
         email=request.form["mail"]
         password=request.form["passw"]
         cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
-        row= cur.fetchone()
-        if row== None:
+        row = cur.fetchone()
+        if row is None:
             return "Invalid Credentials"
         else:
             session["email"]= email
-            return redirect("/dashboard")
+            redirect_url = request.form.get("next", "/dashboard") 
+            # print("Redirecting to:", redirect_url) #debug print
+            return redirect(redirect_url)
     else:
-        return render_template("login.html")
+        next_page= request.args.get("next", "/dashboard")
+        # print(f"Next page from query string: {next_page}")  # Debug print
+        return render_template("login.html", next=next_page)
     
 
 @app.route("/register", methods=["GET","POST"])
@@ -143,6 +144,7 @@ def products():
         cur.execute(query)
         conn.commit()
         return redirect("/products")
+    
         
         
     
@@ -167,9 +169,8 @@ def salez():
         sales=cur.fetchall()
         return render_template("sales.html",products=products,sales=sales)
     
-
+# if __name__ == '__main__':
 app.run(debug=True)
-
 
 
 
