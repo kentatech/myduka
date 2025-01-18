@@ -30,6 +30,7 @@
     <style></style>
   </head>
   <body>
+    
     <nav class="navbar navbar-expand-lg navbar-expand-md bg-warning">
       <div class="container-fluid">
         <a
@@ -103,6 +104,7 @@
                 tabindex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
+                
               >
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -120,16 +122,17 @@
                     <div class="modal-body">
                       <form action="/register" method="post">
                         <label for="" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="jina" />
+                        <input type="text" class="form-control" name="jina" required />
 
                         <label for="" class="form-label">email</label>
-                        <input type="email" class="form-control" name="mail" />
+                        <input type="email" class="form-control" name="mail" required />
 
                         <label for="" class="form-label">Password</label>
                         <input
                           type="password"
                           class="form-control"
                           name="passw"
+                          required
                         />
                         <div class="modal-footer">
                           <button type="submit" class="btn btn-primary mt-1">
@@ -154,6 +157,7 @@
         </div>
       </div>
     </nav>
+  
     <div class="card text-bg-primary">
       <img
         src="/static/images/masterhomepage001.png"
@@ -165,12 +169,12 @@
       >
       <div class="column">
         <div class="col-sm-8 ">
-        <h5 class="card-title bg-primary" style="padding:10px; font-weight: bolder; border-radius:10px;">
+        <h5 class="card-title bg-primary" style="padding:10px; font-weight: bolder; border-radius:10px; width: fit-content;">
           <i class="fa-solid fa-earth-americas fa-lg" style="color: #ffffff;"></i> World's No.1 Point of Sale App 
         </h5>
         </div>
         <div class="col-sm-6 ">
-        <p class="card-text bg-success" style="padding:10px; margin-top: 2px; color: aliceblue;  border-radius: 15px; font-size: x-large; font-weight: bolder;">
+        <p class="card-text bg-success" style="padding:7px; margin-top: 2px; color: aliceblue;  border-radius: 15px; font-size: x-large; width:100%;">
           Manage Goods with ease! <br>Suitable for all kinds of Businesses <i class="fa-solid fa-check fa-beat fa-xl" style="color: #ffffff;"></i></br>
         </p>
         </div>
@@ -189,7 +193,7 @@
               alt="..."
             />
             <div class="card-body">
-              <h5 class="card-title text-success">Manage Products</h5>
+              <h5 class="card-title text-success" style="font-weight: bold;">Manage Products</h5>
               <p class="card-text">
                 Get to know your inventory and manage your products with ease.Control is with the staff assigned.
               </p>
@@ -205,7 +209,7 @@
               alt="..."
             />
             <div class="card-body">
-              <h5 class="card-title text-warning">Manage Sales</h5>
+              <h5 class="card-title text-warning" style="font-weight: bold;">Manage Sales</h5>
               <p class="card-text">
                 Manage your sales and track your revenue with our easy-to-use system.Make informed decisions with our data.
               </p>
@@ -221,7 +225,7 @@
               alt="..."
             />
             <div class="card-body">
-              <h5 class="card-title text-danger">Dashboard Analytics</h5>
+              <h5 class="card-title text-danger" style="font-weight: bold;">Dashboard Analytics</h5>
               <p class="card-text">
                 Access to real-time analytics and insights to help you make data
               </p>
@@ -231,6 +235,7 @@
         </div>
       </div>
     </div>
+    
 
     <footer>
       <p class="card-text" style="font-weight: bold; font-style: italic ; width: 100%; text-align: center; background-color: beige;">
