@@ -23,6 +23,20 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+       /* Make the offcanvas icon float left */
+       .navbar-toggler {
+        order: -1; /* Move to the left on large screens */
+      }
+
+      /* Prevent offcanvas from covering the navbar */
+      .offcanvas-start {
+        margin-top: 5vh; /* Adjust this based on the height of your navbar */
+        /* height: calc(100% - 56px); Ensure offcanvas does not overlap navbar */
+      }
+
+      
+    </style>
   </head>
   <body>
     <!--This templating will happen for private pages //private-normal navabar -->
@@ -69,6 +83,41 @@
     </nav>
 
     <!--private side-navbar(Profile menu) -->
+    <nav class="navbar bg-body-tertiary">
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+     <div class="offcanvas offcanvas-start show " data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
+          
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Staff Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/products">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/sales">Sales</a>
+              </li>
+              
+              
+            </ul>  
+    
+     </div>
+ 
+    </nav>
+
+    
+
   </body>
   <!-- the jquery should be before the datatables and should be loaded before the datatables -->
   <!--the js and jquery should be positioned as body tag closes to ensure that the js and jquery are loaded after the html to avoid lag-->

@@ -81,7 +81,7 @@ def dashboardfunc():
 
     return render_template("dashboard.html",x=x,y=y,p=p,q=q,)
 
-
+#methods are always caps
 @app.route("/login", methods=["POST","GET"])
 def login():
     if request.method=="POST":
@@ -116,9 +116,7 @@ def reg():
         return redirect("/dashboard")
 
 
-
-
-@app.route("/products", methods=["GET", "POST"])
+@app.route("/products", methods = ["GET", "POST"])
 #get is fetching from database and post is getting from form which is filled and posted
 #model view controller uses this to get data from database and send it to view-which works across all frameworks
 @login_required
@@ -127,7 +125,7 @@ def products():
     if request.method == "GET":
         cur.execute("SELECT * FROM products order by id desc")
         products = cur.fetchall()
-        print(products)
+        # print(products)
         return render_template("products.html", products=products)
     else:
         name = request.form["name"]
@@ -138,36 +136,61 @@ def products():
         if selling_price < buying_price:
             return "Selling price should be greater than buying price"
         
-        query="insert into products(name,buying_price,selling_price,stock_quantity) "\
+        query ="insert into products(name,buying_price,selling_price,stock_quantity) "\
         "values('{}',{},{},{})".format(name,buying_price,selling_price,stock_quantity)
 
         cur.execute(query)
         conn.commit()
         return redirect("/products")
-    
-        
-        
-    
-
-@app.route("/sales",methods=["GET", "POST"])
+     
+@app.route("/sales",methods = ["GET", "POST"])
 @login_required
 def salez():
-    if request.method=="POST":
+    if request.method =="POST":
         pid=request.form["pid"]
-        amount=request.form["amount"]
+        amount=int(request.form["amount"])
         #print(pid,amount)
+        
+        # Check the current stock quantity
+        cur.execute("SELECT stock_quantity FROM products WHERE id = %s", (pid,))
+        q = cur.fetchone()
+        current_quantity = q[0]
+        
+        if current_quantity == 0:
+            return "Good out of stock"
+        
+        if amount > current_quantity:
+            return "Sale amount exceeds available stock"
+        
+        # insert after input has validated quantity
         query_s="insert into sales(pid,quantity,created_at) "\
-        "values('{}',{},{})".format(pid,amount,'now()')
+        "values('{}',{},now())".format(pid,amount)
         cur.execute(query_s)
         conn.commit()
+
+        # Update the products table to decrement the product count
+        query_u = "UPDATE products SET stock_quantity = stock_quantity - %s WHERE id = %s"
+        cur.execute(query_u,(amount, pid))
+
+        
+
         return redirect("/sales")
+    
     else:
         cur.execute("select * from products")
         products=cur.fetchall()
         cur.execute("select sales.ID, products.Name, sales.quantity, sales.created_at "\
                     "from sales inner join products on sales.pid = products.id")
         sales=cur.fetchall()
+        
         return render_template("sales.html",products=products,sales=sales)
+        
+    
+
+@app.route("/base")
+def base():
+    return "thankyou"
+    render_template("base.html")
     
 if __name__ == '__main__':
     app.run(debug=True)
