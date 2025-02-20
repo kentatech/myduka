@@ -142,7 +142,7 @@
             {%if s[3] != None %}
             <!--line 31,33,34,35 are if statements used when value is null-->
             {{ s[3] | strftime("%B %d, %Y") }}<!--only line needed the above and below are problem solving technique when value is null-->
-            {% else %} {{Time Unavailable}} {% endif %}
+            {% else %} Time Unavailable {% endif %}
           </td>
           <!--this inputs readable date format/ first import datetime and insert custom filter before this last step-->
         </tr>

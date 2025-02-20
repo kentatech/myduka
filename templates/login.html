@@ -78,6 +78,7 @@
           <input type="submit" value="LogIn" />
         </form>
        -->
+       
       <form action="/login" method="POST">
         
         <div class="mb-3">
@@ -94,6 +95,15 @@
               <i class="fa-solid fa-users fa-bounce" style="color: #0a41ae"></i
             ></label>
           </h1>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul>
+                {% for message in messages %}
+                  <li style="color: red; list-style: none;">{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
           
           <input type="hidden" name="next" value="{{next}}" />  <!-- Hidden input for next parameter -->
           

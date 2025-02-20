@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect,session,flash
 from database import conn, cur
 from functools import wraps
 
@@ -42,6 +42,7 @@ def navb():
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("You have successfully Logged out!")
     return redirect("/login")
 
 
