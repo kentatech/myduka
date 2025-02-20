@@ -154,11 +154,9 @@ def salez():
         # Check the current stock quantity
         cur.execute("SELECT stock_quantity FROM products WHERE id = %s", (pid,))
         q = cur.fetchone()
-        current_quantity = q[0]
-        
+        current_quantity = q[0]        
         if current_quantity == 0:
-            return "Good out of stock"
-        
+            return "Good out of stock" 
         if amount > current_quantity:
             return "Sale amount exceeds available stock"
         
@@ -171,8 +169,6 @@ def salez():
         # Update the products table to decrement the product count
         query_u = "UPDATE products SET stock_quantity = stock_quantity - %s WHERE id = %s"
         cur.execute(query_u,(amount, pid))
-
-        
 
         return redirect("/sales")
     
