@@ -239,7 +239,7 @@
                       ></button>
                     </div>
                     <div class="modal-body">
-                      <form action="/update-products" method="post">
+                      <form action="/update-products" method="POST">
                         <div class="mb-3">
 
                           <input type="hidden"  name="id" value="{{p[0]}}" />
@@ -250,6 +250,7 @@
                           >
                           <input
                             value="{{p[1]}}"
+                            name="name"
                             type="text"
                             class="form-control"
                             id="exampleInputEmail1"
@@ -262,6 +263,7 @@
                           >
                           <input
                             value="{{p[2]}}"
+                            name="bp"
                             type="number"
                             class="form-control"
                             id="exampleInputPassword1"
@@ -273,6 +275,7 @@
                           >
                           <input
                             value="{{p[3]}}"
+                            name="sp"
                             type="number"
                             class="form-control"
                             id="exampleInputPassword1"
@@ -284,6 +287,7 @@
                           >
                           <input
                             value="{{p[4]}}"
+                            name="stqu"
                             type="number"
                             class="form-control"
                             id="exampleInputPassword1"

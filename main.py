@@ -188,6 +188,19 @@ def salez():
 def base():
     return "thankyou"
     render_template("base.html")
+
+@app.route("/update-products", methods=["GET","POST"])
+def update_product():
+    name=request.form["name"]
+    buying_price=float(request.form["bp"])
+    selling_price=float(request.form["sp"])
+    stock_quantity=int(request.form["stqu"])
+    id=request.form["id"]    
+    query="update products set name='{}',buying_price={},selling_price={},stock_quantity={} where id={}".format(name,buying_price,selling_price,stock_quantity,id)
+    cur.execute(query)
+    conn.commit()
+    return redirect("/products")
+    
     
 if __name__ == '__main__':
     app.run(debug=True)
