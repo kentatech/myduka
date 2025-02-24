@@ -195,6 +195,7 @@
             <th>Buying Price</th>
             <th>Selling Price</th>
             <th>Stock Quantity</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -205,6 +206,147 @@
             <td>{{p[2]}}</td>
             <td>{{p[3]}}</td>
             <td>{{p[4]}}</td>
+            <td>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal{{p[0]}}"
+              >
+                Edit
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal{{p[0]}}"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Edit Product
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/update-products" method="post">
+                        <div class="mb-3">
+
+                          <input type="hidden"  name="id" value="{{p[0]}}" />
+
+                          
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Product name</label
+                          >
+                          <input
+                            value="{{p[1]}}"
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label"
+                            >Buying Price</label
+                          >
+                          <input
+                            value="{{p[2]}}"
+                            type="number"
+                            class="form-control"
+                            id="exampleInputPassword1"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label"
+                            >Selling Price</label
+                          >
+                          <input
+                            value="{{p[3]}}"
+                            type="number"
+                            class="form-control"
+                            id="exampleInputPassword1"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label"
+                            >Stock Quantity</label
+                          >
+                          <input
+                            value="{{p[4]}}"
+                            type="number"
+                            class="form-control"
+                            id="exampleInputPassword1"
+                          />
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                          Update
+                        </button>
+                      </form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Delete
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Modal title
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
