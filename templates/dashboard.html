@@ -17,7 +17,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    
   </head>
   <body class="dashbody">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -117,6 +116,72 @@
                   datasets: [{
                     label: 'profit per product',
                     data: {{ q | tojson | safe }},
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="chart03">
+            <div>
+              <canvas id="myChart003"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+              const piectx = document.getElementById('myChart003');
+
+              new Chart(piectx, {
+                type: 'doughnut',
+                data: {
+                  labels: {{ p | tojson | safe }},
+                  datasets: [{
+                    label: 'sales per product',
+                    data: {{ q | tojson | safe }},
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+        </div>
+
+        <!-- chart 004 -->
+        <div class="col-6">
+          <div class="chart004">
+            <div>
+              <canvas id="myChart004"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+              const btx = document.getElementById('myChart004');
+
+              new Chart(btx, {
+                type: 'radar',
+                data: {
+                  labels: {{ x | tojson | safe }},
+                  datasets: [{
+                    label: 'sales per product',
+                    data: {{ y | tojson | safe }},
                     borderWidth: 1
                   }]
                 },

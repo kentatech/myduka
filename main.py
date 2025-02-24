@@ -198,7 +198,7 @@ def update_product():
     id=request.form["id"]    
     query="update products set name='{}',buying_price={},selling_price={},stock_quantity={} where id={}".format(name,buying_price,selling_price,stock_quantity,id)
     cur.execute(query)
-    conn.commit()
+    conn.commit()   
     return redirect("/products")
     
     
