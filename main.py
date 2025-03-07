@@ -22,8 +22,6 @@ def login_required(f):
     return protected
 
 
-
-
 # Define a custom filter- this will be used to format the date
 @app.template_filter('strftime')
 def format_datetime(value, format="%B %d, %Y"):
@@ -48,6 +46,7 @@ def logout():
 
 @app.route("/about")
 def about():
+    
     return "About page info is supposed to be displayed on this route"
 
 @app.route("/dashboard")
@@ -80,7 +79,54 @@ def dashboardfunc():
         p.append(z[1])
         q.append(z[0])
 
-    return render_template("dashboard.html",x=x,y=y,p=p,q=q,)
+    cur.execute("""
+    WITH daily_sales AS (
+        SELECT 
+            SUM ((p.selling_price - p.buying_price) * s.quantity) AS sales, 
+            s.created_at::DATE AS sale_date
+        FROM 
+            sales AS s
+        JOIN 
+            products AS p 
+        ON 
+            p.id = s.pid
+        GROUP BY 
+            s.created_at::DATE
+    ),
+    daily_expenses AS (
+        SELECT 
+            SUM(amount) AS total_expenses, 
+            purchase_date::DATE AS expense_date
+        FROM 
+            purchases
+        GROUP BY 
+            purchase_date::DATE
+    )
+    SELECT 
+        s.sale_date AS profit_date,
+        COALESCE(s.sales, 0) - COALESCE(e.total_expenses, 0) AS final_profit
+    FROM 
+        daily_sales AS s
+    FULL OUTER JOIN 
+        daily_expenses AS e
+    ON 
+        s.sale_date = e.expense_date
+    WHERE
+        s.sale_date = '2025-03-07' OR e.expense_date = '2025-03-07'
+    """)
+    
+    final_profit = cur.fetchone()
+    print(final_profit)
+
+    # a=[]
+    # b=[]
+    # for c in final_profit:
+    #     a.append(c[0])
+    #     b.append(float(c[1]))
+    
+    return render_template("dashboard.html",x=x,y=y,p=p,q=q)
+
+
 
 #methods are always caps
 @app.route("/login", methods=["POST","GET"])
@@ -93,7 +139,7 @@ def login():
         if row is None:
             return "Invalid Credentials"
         else:
-            session["email"]= email
+            session["email"] = email
             redirect_url = request.form.get("next", "/dashboard") 
             # print("Redirecting to:", redirect_url) #debug print
             return redirect(redirect_url)
@@ -114,7 +160,7 @@ def reg():
         query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,password)
         cur.execute(query_reg)
         conn.commit()
-        return redirect("/dashboard")
+        return redirect("/login")
 
 
 @app.route("/products", methods = ["GET", "POST"])
@@ -168,8 +214,8 @@ def salez():
         conn.commit()
 
         # Update the products table to decrement the product count
-        query_u = "UPDATE products SET stock_quantity = stock_quantity - %s WHERE id = %s"
-        cur.execute(query_u,(amount, pid))
+        query_u = "UPDATE products SET stock_quantity = stock_quantity - {} WHERE id = {}".format(amount, pid)
+        cur.execute(query_u)
 
         return redirect("/sales")
     
@@ -204,6 +250,7 @@ def update_product():
     
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
