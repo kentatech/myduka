@@ -198,8 +198,14 @@ def salez():
         amount=int(request.form["amount"])
         #print(pid,amount)
         
+        # Validate the input
+        if amount is None:
+            return "Please enter the sale amount"
+        if amount <= 0:
+            return "Sale amount should be greater than zero"
+
         # Check the current stock quantity
-        cur.execute("SELECT stock_quantity FROM products WHERE id = %s", (pid,))
+        cur.execute("SELECT stock_quantity FROM products WHERE id = {}".format(pid,))
         q = cur.fetchone()
         current_quantity = q[0]        
         if current_quantity == 0:
