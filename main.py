@@ -157,9 +157,15 @@ def reg():
         name=request.form["jina"]
         email=request.form["mail"]
         password=request.form["passw"]
-        query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,password)
-        cur.execute(query_reg)
-        conn.commit()
+        #check if email exists
+        cur.execute("select id from users where email='{}'".format(email))
+        row=cur.fetchone()
+        if row is not None:
+            return "User with that email already exists"        
+        else:
+            query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,password)
+            cur.execute(query_reg)
+            conn.commit()
         return redirect("/login")
 
 
@@ -179,7 +185,8 @@ def products():
         buying_price = float(request.form["bp"])
         selling_price = float(request.form["sp"])
         stock_quantity = int(request.form["stqu"])
-        #print(name, buying_price, selling_price, stock_quantity) 
+        # print(name, buying_price, selling_price, stock_quantity) 
+            
         if selling_price < buying_price:
             return "Selling price should be greater than buying price"
         
@@ -197,7 +204,7 @@ def salez():
         pid=request.form["pid"]
         amount=int(request.form["amount"])
         #print(pid,amount)
-        
+
         # Validate the input
         if amount is None:
             return "Please enter the sale amount"
