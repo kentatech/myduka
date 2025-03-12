@@ -140,7 +140,7 @@ def login():
         result = cur.fetchone()
         print("----------------------",result[0])
         hw_pw = result[0]
-        pass_bool = bcrypt.check_password_hash(hw_pw, password).decode('utf-8')
+        pass_bool = bcrypt.check_password_hash(hw_pw, password)
         if not pass_bool:
             return "Invalid Password!!!!"    
         else:
@@ -174,7 +174,8 @@ def reg():
         if row is not None:
             return "User with that email already exists"        
         else:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            salt = bcrypt.gensalt()
+            hashed_password = bcrypt.generate_password_hash(password,salt).decode('utf-8')
             # check if password is hashed
             print(f"HASHED PASSWORD IS...." + hashed_password)
             query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,hashed_password)
