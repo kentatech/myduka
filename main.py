@@ -257,7 +257,24 @@ def salez():
         
         return render_template("sales.html",products=products,sales=sales)
         
-    
+@app.route("/purchases", methods=["GET", "POST"])
+@login_required
+def expenses():
+    if request.method=="GET":
+        cur.execute("SELECT * FROM PURCHASES ORDER BY purchase_date DESC")
+        expenses=cur.fetchall()
+        return render_template("expenses.html", expenses=expenses)
+    else:
+        expense_category = request.form["expense_category"] 
+        description = request.form["description"]
+        amount = int(request.form["amount"]) 
+
+        query_create_expense="INSERT INTO purchases(expense_category, description, amount, purchase_date)"\
+                        "VALUES('{}','{}',{}, now())".format(expense_category,description,amount)
+        cur.execute(query_create_expense)
+        conn.commit()
+        return redirect("/purchases")
+   
 
 @app.route("/base")
 def base():
