@@ -145,11 +145,11 @@ def login():
             return "Invalid Password!!!!"    
         else:
             #check if email & password Co-exists in the same row
-            cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
-            row = cur.fetchone()
-            if row is None:
-                return "Invalid Email or Password"
-            else:
+            # cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
+            # row = cur.fetchone()
+            # if row is None:
+            #     return "Invalid Email or Password"
+            # else:
                 session["email"] = email
                 redirect_url = request.form.get("next", "/dashboard") 
                 # print("Redirecting to:", redirect_url) #debug print
@@ -174,8 +174,7 @@ def reg():
         if row is not None:
             return "User with that email already exists"        
         else:
-            salt = bcrypt.gensalt()
-            hashed_password = bcrypt.generate_password_hash(password,salt).decode('utf-8')
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             # check if password is hashed
             print(f"HASHED PASSWORD IS...." + hashed_password)
             query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,hashed_password)
