@@ -274,6 +274,24 @@ def expenses():
         conn.commit()
         return redirect("/purchases")
    
+@app.route("/stock", methods=["GET", "POST"])
+@login_required
+def stock():
+    if request.method=="GET":
+        cur.execute("SELECT stock.stock_id, products.name, stock.quantity, stock.stock_in_date FROM stock join products on products.id=stock.pid")
+        stock=cur.fetchall()
+        cur.execute("SELECT * FROM products ORDER BY name ASC")
+        products=cur.fetchall()
+        return render_template("stock.html", stock=stock, products=products)
+    else:
+        pid=request.form["pid"]
+        quantity=request.form["quantity"]
+        query_update_stock="INSERT INTO stock(quantity, pid,stock_in_date)"\
+                            "VALUES({},{},now())".format(quantity,pid)
+        cur.execute(query_update_stock)
+        conn.commit()
+        return redirect("/stock")
+
 
 @app.route("/base")
 def base():
