@@ -1,14 +1,15 @@
 from flask import Flask,render_template,request,redirect,session,flash
 from database import conn, cur
 from functools import wraps
+from flask_bcrypt import Bcrypt
 
 #functools import wraps is initialised to use the decorator function
 
 # flask name initiates app- class obj
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
 #secret placed for runing sessions
-app.secret_key="!mydUIOka9923!"
+app.secret_key = b'!mydUIOkaknknkn9923!'
 
 #Decorator function is used to give a func/route more functionality
 #It runs before the route function is processed to see if user is logged in
@@ -127,22 +128,32 @@ def dashboardfunc():
     return render_template("dashboard.html",x=x,y=y,p=p,q=q)
 
 
-
-#methods are always caps
 @app.route("/login", methods=["POST","GET"])
 def login():
     if request.method=="POST":
         email=request.form["mail"]
         password=request.form["passw"]
-        cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
-        row = cur.fetchone()
-        if row is None:
-            return "Invalid Credentials"
+
+        #check password match between hashed password and input password
+        relationship = "select password from users where email='{}'".format(email)
+        cur.execute(relationship)
+        result = cur.fetchone()
+        print("----------------------",result[0])
+        hw_pw = result[0]
+        pass_bool = bcrypt.check_password_hash(hw_pw, password).decode('utf-8')
+        if not pass_bool:
+            return "Invalid Password!!!!"    
         else:
-            session["email"] = email
-            redirect_url = request.form.get("next", "/dashboard") 
-            # print("Redirecting to:", redirect_url) #debug print
-            return redirect(redirect_url)
+            #check if email & password Co-exists in the same row
+            cur.execute("select id from users where email='{}' and password='{}'".format(email,password))
+            row = cur.fetchone()
+            if row is None:
+                return "Invalid Email or Password"
+            else:
+                session["email"] = email
+                redirect_url = request.form.get("next", "/dashboard") 
+                # print("Redirecting to:", redirect_url) #debug print
+                return redirect(redirect_url)
     else:
         next_page= request.args.get("next", "/dashboard")
         # print(f"Next page from query string: {next_page}")  # Debug print
@@ -163,10 +174,14 @@ def reg():
         if row is not None:
             return "User with that email already exists"        
         else:
-            query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,password)
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            # check if password is hashed
+            print(f"HASHED PASSWORD IS...." + hashed_password)
+            query_reg ="insert into users(name,email,password) values('{}','{}','{}')".format(name,email,hashed_password)
             cur.execute(query_reg)
             conn.commit()
-        return redirect("/login")
+            return redirect("/login")
+        
 
 
 @app.route("/products", methods = ["GET", "POST"])
