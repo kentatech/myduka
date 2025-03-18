@@ -1,7 +1,8 @@
 from flask import Flask,render_template,request,redirect,session,flash
-from database import conn, cur
+# from database import conn, cur
 from functools import wraps
 from flask_bcrypt import Bcrypt
+import sqlite3
 
 #functools import wraps is initialised to use the decorator function
 
@@ -11,6 +12,24 @@ bcrypt = Bcrypt(app)
 #secret placed for runing sessions
 app.secret_key = b'!mydUIOkaknknkn9923!'
 
+
+DB_PATH = "database/store.db"
+
+conn = sqlite3.connect("store.db")
+cur = conn.cursor()
+
+def init_db():
+    #create sqlite database
+    conn = sqlite3.connect("store.db")
+    cur = conn.cursor()
+    #create tables used in the database
+    cur.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS products(id INTEGER PRIMARY KEY, name TEXT, buying_price REAL, selling_price REAL, stock_quantity INTEGER)")
+    cur.execute("CREATE TABLE IF NOT EXISTS sales(id INTEGER PRIMARY KEY, pid INTEGER, quantity INTEGER, created_at TIMESTAMP)")    
+    cur.execute("CREATE TABLE IF NOT EXISTS purchases(id INTEGER PRIMARY KEY, expense_category TEXT, description TEXT, amount REAL, purchase_date TIMESTAMP)")
+    cur.execute("CREATE TABLE IF NOT EXISTS stock(stock_id INTEGER PRIMARY KEY, pid INTEGER, quantity INTEGER, stock_in_date TIMESTAMP)")   
+    conn.commit()
+
 #Decorator function is used to give a func/route more functionality
 #It runs before the route function is processed to see if user is logged in
 
@@ -18,8 +37,8 @@ def login_required(f):
     @wraps(f)
     def protected(*args, **kwargs):
         if 'email' in session:
-            return f(*args, **kwargs)
-        return redirect(f"/login?next={request.path}")
+            return redirect(f"/login?next={request.path}")
+        return f(*args, **kwargs)  
     return protected
 
 
@@ -53,7 +72,8 @@ def about():
 @app.route("/dashboard")
 @login_required
 def dashboardfunc():
-
+    conn = sqlite3.connect("store.db")
+    cur = conn.cursor()
     cur.execute("SELECT sum (p.selling_price * s.quantity) as sales, s.created_at from sales as s join products as p on p.id=s.pid GROUP BY created_at ORDER BY created_at;")
     daily_sales=cur.fetchall()
    # print(daily_sales)
@@ -80,44 +100,44 @@ def dashboardfunc():
         p.append(z[1])
         q.append(z[0])
 
-    cur.execute("""
-    WITH daily_sales AS (
-        SELECT 
-            SUM ((p.selling_price - p.buying_price) * s.quantity) AS sales, 
-            s.created_at::DATE AS sale_date
-        FROM 
-            sales AS s
-        JOIN 
-            products AS p 
-        ON 
-            p.id = s.pid
-        GROUP BY 
-            s.created_at::DATE
-    ),
-    daily_expenses AS (
-        SELECT 
-            SUM(amount) AS total_expenses, 
-            purchase_date::DATE AS expense_date
-        FROM 
-            purchases
-        GROUP BY 
-            purchase_date::DATE
-    )
-    SELECT 
-        s.sale_date AS profit_date,
-        COALESCE(s.sales, 0) - COALESCE(e.total_expenses, 0) AS final_profit
-    FROM 
-        daily_sales AS s
-    FULL OUTER JOIN 
-        daily_expenses AS e
-    ON 
-        s.sale_date = e.expense_date
-    WHERE
-        s.sale_date = '2025-03-07' OR e.expense_date = '2025-03-07'
-    """)
+    # cur.execute("""
+    # WITH daily_sales AS (
+    #     SELECT 
+    #         SUM ((p.selling_price - p.buying_price) * s.quantity) AS sales, 
+    #         s.created_at::DATE AS sale_date
+    #     FROM 
+    #         sales AS s
+    #     JOIN 
+    #         products AS p 
+    #     ON 
+    #         p.id = s.pid
+    #     GROUP BY 
+    #         s.created_at::DATE
+    # ),
+    # daily_expenses AS (
+    #     SELECT 
+    #         SUM(amount) AS total_expenses, 
+    #         purchase_date::DATE AS expense_date
+    #     FROM 
+    #         purchases
+    #     GROUP BY 
+    #         purchase_date::DATE
+    # )
+    # SELECT 
+    #     s.sale_date AS profit_date,
+    #     COALESCE(s.sales, 0) - COALESCE(e.total_expenses, 0) AS final_profit
+    # FROM 
+    #     daily_sales AS s
+    # FULL OUTER JOIN 
+    #     daily_expenses AS e
+    # ON 
+    #     s.sale_date = e.expense_date
+    # WHERE
+    #     s.sale_date = '2025-03-07' OR e.expense_date = '2025-03-07'
+    # """)
     
-    final_profit = cur.fetchone()
-    print(final_profit)
+    # final_profit = cur.fetchone()
+    # print(final_profit)
 
     # a=[]
     # b=[]
@@ -136,6 +156,7 @@ def login():
 
         #check password match between hashed password and input password
         relationship = "select password from users where email='{}'".format(email)
+        
         cur.execute(relationship)
         result = cur.fetchone()
         print("----------------------",result[0])
@@ -150,10 +171,10 @@ def login():
             # if row is None:
             #     return "Invalid Email or Password"
             # else:
-                session["email"] = email
-                redirect_url = request.form.get("next", "/dashboard") 
-                # print("Redirecting to:", redirect_url) #debug print
-                return redirect(redirect_url)
+            session["email"] = email
+            redirect_url = request.form.get("next", "/dashboard") 
+                    # print("Redirecting to:", redirect_url) #debug print
+            return redirect(redirect_url)
     else:
         next_page= request.args.get("next", "/dashboard")
         # print(f"Next page from query string: {next_page}")  # Debug print
@@ -168,6 +189,7 @@ def reg():
         name=request.form["jina"]
         email=request.form["mail"]
         password=request.form["passw"]
+
         #check if email exists
         cur.execute("select id from users where email='{}'".format(email))
         row=cur.fetchone()
@@ -189,7 +211,6 @@ def reg():
 #model view controller uses this to get data from database and send it to view-which works across all frameworks
 @login_required
 def products():
-
     if request.method == "GET":
         cur.execute("SELECT * FROM products order by id desc")
         products = cur.fetchall()
@@ -225,7 +246,7 @@ def salez():
             return "Please enter the sale amount"
         if amount <= 0:
             return "Sale amount should be greater than zero"
-
+        
         # Check the current stock quantity
         cur.execute("SELECT stock_quantity FROM products WHERE id = {}".format(pid,))
         q = cur.fetchone()
@@ -312,6 +333,7 @@ def update_product():
     
     
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
 
 
